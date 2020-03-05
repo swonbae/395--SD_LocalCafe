@@ -13,7 +13,7 @@ public class ServiceController : MonoBehaviour
 
     Queue_Utilities queue_Utilities; // = new Queue_Utilities();
 
-    public Transform exitDoor;
+    public Transform[] exitDoor;
     public Transform desk;
 
     // Start is called before the first frame update
@@ -21,8 +21,8 @@ public class ServiceController : MonoBehaviour
     {
         //queue_Utilities = new Queue_Utilities();
         arrivalQueueController = arrivalQueueControllerGO.GetComponent<ArrivalQueueController>();
-        exitDoor = GameObject.FindGameObjectWithTag("ExitDoor").transform;
-        desk = GameObject.FindGameObjectWithTag("Desk").transform;
+        exitDoor = GameObject.FindGameObjectsWithTag("ExitDoor").transform;
+        desk = GameObject.FindGameObjectsWithTag("Desk").transform;
     }
 
     void Update()

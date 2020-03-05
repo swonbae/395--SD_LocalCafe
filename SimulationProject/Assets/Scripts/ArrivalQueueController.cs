@@ -44,36 +44,10 @@ public class ArrivalQueueController : MonoBehaviour
             print("inter_arrival_time_in_seconds:" + inter_arrival_time_in_seconds);
             //StartCoroutine(GenerateArrivals());
             yield return new WaitForSeconds(inter_arrival_time_in_seconds);
-            //switch (rand)
-            //{   
-                //case 0:
-                    GameObject go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
-                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
-                    lastPlaceInQueue = go.transform;
-                    //go.GetComponent<CustomerController>().SetDestination()
-            
-            
-                /*    arrivalQueue.Enqueue(go);
-                break;
-                case 1:
-                    go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
-                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
-                    lastPlaceInQueue = go.transform;
-                    //go.GetComponent<CustomerController>().SetDestination()
-            
-            
-                    arrivalQueue.Enqueue(go);
-                break;
-                case 2:
-                    go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
-                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
-                    lastPlaceInQueue = go.transform;
-                    //go.GetComponent<CustomerController>().SetDestination()
-            
-            
-                    arrivalQueue.Enqueue(go);
-                break;
-            }*/
+
+            GameObject go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
+            go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
+            lastPlaceInQueue = go.transform;
             
             print("Arrival Queue Length=" + arrivalQueue.Count);
         }
