@@ -5,10 +5,12 @@ using UnityEngine;
 public class ArrivalQueueController : MonoBehaviour
 {
     public GameObject customerPrefab;
-    public Transform customerSpawnPlace;
+    public GameObject[] customerSpawnPlace;
+    public GameObject[] receptionistCounter;
     public bool generatingArrivals = false;
     StudentController studentController;
-    Transform waitingRoom;
+    Transform waitingArea;
+    Transform ticketLine;
     Transform lastPlaceInQueue;
 
     Queue<GameObject> arrivalQueue = new Queue<GameObject>();
@@ -22,8 +24,8 @@ public class ArrivalQueueController : MonoBehaviour
     {
         //queue_Utilities = GetComponent<Queue_Utilities>();
         Queue_Utilities.lambda = arrival_rate;
-        waitingRoom = GameObject.FindGameObjectWithTag("WaitingRoom").transform;
-        lastPlaceInQueue = waitingRoom;
+        waitingArea = GameObject.FindGameObjectWithTag("WaitingArea").transform;
+        lastPlaceInQueue = waitingArea;
         //StartCoroutine(GenerateArrivals());
     }
 
@@ -32,7 +34,9 @@ public class ArrivalQueueController : MonoBehaviour
 
         while (generatingArrivals == true)
         {
-
+            int rand = GenerateRandom();
+            print(rand);
+            
             //float inter_arrival_time_in_seconds = Queue_Utilities.ExpDist(1f / arrival_rate); //this is in min
             float inter_arrival_time_in_seconds = Queue_Utilities.ObservedDist(); //this is in min
 
@@ -40,14 +44,37 @@ public class ArrivalQueueController : MonoBehaviour
             print("inter_arrival_time_in_seconds:" + inter_arrival_time_in_seconds);
             //StartCoroutine(GenerateArrivals());
             yield return new WaitForSeconds(inter_arrival_time_in_seconds);
+            //switch (rand)
+            //{   
+                //case 0:
+                    GameObject go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
+                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
+                    lastPlaceInQueue = go.transform;
+                    //go.GetComponent<CustomerController>().SetDestination()
             
-            GameObject go = Instantiate(customerPrefab, customerSpawnPlace.position, Quaternion.identity);
-            go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
-            lastPlaceInQueue = go.transform;
-            //go.GetComponent<CustomerController>().SetDestination()
+            
+                /*    arrivalQueue.Enqueue(go);
+                break;
+                case 1:
+                    go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
+                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
+                    lastPlaceInQueue = go.transform;
+                    //go.GetComponent<CustomerController>().SetDestination()
             
             
-            arrivalQueue.Enqueue(go);
+                    arrivalQueue.Enqueue(go);
+                break;
+                case 2:
+                    go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
+                    go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
+                    lastPlaceInQueue = go.transform;
+                    //go.GetComponent<CustomerController>().SetDestination()
+            
+            
+                    arrivalQueue.Enqueue(go);
+                break;
+            }*/
+            
             print("Arrival Queue Length=" + arrivalQueue.Count);
         }
     }
@@ -73,14 +100,16 @@ public class ArrivalQueueController : MonoBehaviour
             }
         }
 
-
-
     }
 
 
     public int ArrivalQueueCount()
     {
         return arrivalQueue.Count;
+    }
+
+    public int GenerateRandom(){
+        return Random.Range(0, 2);
     }
 
     public GameObject GetFirstCustomer()
@@ -96,7 +125,7 @@ public class ArrivalQueueController : MonoBehaviour
             GameObject goFirst = arrivalQueue.Peek();
             if(goFirst!= null)
             {
-                goFirst.GetComponent<StudentController>().SetDestination(waitingRoom);
+                goFirst.GetComponent<StudentController>().SetDestination(waitingArea);
             }
 
             return go;
