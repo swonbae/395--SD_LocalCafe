@@ -60,9 +60,10 @@ public class ServiceController : MonoBehaviour
     {
             GameObject go = arrivalQueueController.GetFirstCustomer();
             
+            if(go != null){
                 go.GetComponent<StudentController>().SetDestination(desk);
-
                 CurrentOrderCustomer = go;
+            }
     }
 
     public void WaitForService()
