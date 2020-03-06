@@ -12,8 +12,10 @@ public class Queue_Utilities : ScriptableObject
     private static float mu_r; // = 1f / lambda; // service time [TimeUnit] 
     // Start is called before the first frame update
 
-    public static float[] observerdData_xs=new[]{0f, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100 };
-    public static float[] observerdData_ys=new[] {0f,245,160,136,117,79,64,42,41,29,29,58 };
+    // public static float[] observerdData_xs=new[]{0f, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 100 };
+    // public static float[] observerdData_ys=new[] {0f,245,160,136,117,79,64,42,41,29,29,58 };
+    public static float[] observerdData_xs=new[]{ 0f, 1, 2, 3 };
+    public static float[] observerdData_ys=new[] { 0f, 30, 6, 1 };
     public static bool observerdData_prepared = false;
 
 
@@ -23,6 +25,10 @@ public class Queue_Utilities : ScriptableObject
 
     static void Start()
     {
+        Init();
+    }
+
+    public static void Init(){
         lambda_r = 1f / lambda;
         mu_r = 1f / mu;
     }

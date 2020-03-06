@@ -5,10 +5,12 @@ using UnityEngine;
 public class StudentController : MonoBehaviour
 {
     public Transform standByArea;
-    public Transform getTicketCounter;
-    public Transform enrollmentCounter;
+    // public Transform getTicketCounter;
+    // public Transform enrollmentCounter;
 
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
+    
+    public ServiceController serviceController;
     
     // Start is called before the first frame update
     void Start()
@@ -18,6 +20,7 @@ public class StudentController : MonoBehaviour
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
         navMeshAgent.SetDestination(standByArea.position);
 
+        serviceController = GameObject.FindGameObjectWithTag("GameController").GetComponent<ServiceController>();
     }
 
     public void SetDestination(Transform transform)
@@ -31,9 +34,19 @@ public class StudentController : MonoBehaviour
     }
 
 
-    public void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Exits")
+        // Debug.Log(other.gameObject.tag);
+
+        if (other.gameObject.tag == "Desk")
+        {
+            serviceController.WaitForService();
+        }
+        else if (other.gameObject.tag == "Checkout")
+        {
+            serviceController.Checkout(this.gameObject);
+        }
+        else if (other.gameObject.tag == "Exit")
         {
             Destroy(gameObject);
             //gameObject.SetActive(false);

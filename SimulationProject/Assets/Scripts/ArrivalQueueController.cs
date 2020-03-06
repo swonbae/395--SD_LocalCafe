@@ -7,8 +7,10 @@ public class ArrivalQueueController : MonoBehaviour
     public GameObject customerPrefab;
     public Transform customerSpawnPlace;
     public bool generatingArrivals = false;
-    StudentController studentController;
-    Transform waitingRoom;
+    // StudentController studentController;
+    public Transform waitingRoom;
+    // public Transform orderPoint;
+    // public Transform checkoutPoint;
     Transform lastPlaceInQueue;
 
     Queue<GameObject> arrivalQueue = new Queue<GameObject>();
@@ -22,7 +24,17 @@ public class ArrivalQueueController : MonoBehaviour
     {
         //queue_Utilities = GetComponent<Queue_Utilities>();
         Queue_Utilities.lambda = arrival_rate;
-        waitingRoom = GameObject.FindGameObjectWithTag("WaitingRoom").transform;
+        Queue_Utilities.Init();
+
+        if(waitingRoom == null){
+            waitingRoom = GameObject.FindGameObjectWithTag("WaitingArea").transform;
+        }
+        // if(orderPoint == null){
+        //     orderPoint = GameObject.FindGameObjectWithTag("Order").transform;
+        // }
+        // if(checkoutPoint == null){
+        //     checkoutPoint = GameObject.FindGameObjectWithTag("Checkout").transform;
+        // }
         lastPlaceInQueue = waitingRoom;
         //StartCoroutine(GenerateArrivals());
     }
@@ -44,7 +56,6 @@ public class ArrivalQueueController : MonoBehaviour
             GameObject go = Instantiate(customerPrefab, customerSpawnPlace.position, Quaternion.identity);
             go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
             lastPlaceInQueue = go.transform;
-            //go.GetComponent<CustomerController>().SetDestination()
             
             
             arrivalQueue.Enqueue(go);
@@ -91,12 +102,17 @@ public class ArrivalQueueController : MonoBehaviour
         }
         else
         {
+            // GameObject go=arrivalQueue.Dequeue();
+            // GameObject goFirst = arrivalQueue.Peek();
+            // if(goFirst!= null)
+            // {
+            //     goFirst.GetComponent<StudentController>().SetDestination(waitingRoom);
+            // }
 
             GameObject go=arrivalQueue.Dequeue();
-            GameObject goFirst = arrivalQueue.Peek();
-            if(goFirst!= null)
+            if(go!= null)
             {
-                goFirst.GetComponent<StudentController>().SetDestination(waitingRoom);
+                go.GetComponent<StudentController>().SetDestination(waitingRoom);
             }
 
             return go;
