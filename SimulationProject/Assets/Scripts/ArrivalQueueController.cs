@@ -52,6 +52,11 @@ public class ArrivalQueueController : MonoBehaviour
             print("inter_arrival_time_in_seconds:" + inter_arrival_time_in_seconds);
             //StartCoroutine(GenerateArrivals());
             yield return new WaitForSeconds(inter_arrival_time_in_seconds);
+
+// print("Last Place In Queue: "+lastPlaceInQueue);
+            if(lastPlaceInQueue == null){
+                lastPlaceInQueue = waitingRoom;
+            }
             
             GameObject go = Instantiate(customerPrefab, customerSpawnPlace.position, Quaternion.identity);
             go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);

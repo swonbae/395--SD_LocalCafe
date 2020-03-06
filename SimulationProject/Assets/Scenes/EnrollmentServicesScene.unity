@@ -289,7 +289,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 4, y: -4}
-  m_SizeDelta: {x: 160, y: 50}
+  m_SizeDelta: {x: 160, y: 68}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &167166722
 GameObject:
@@ -960,7 +960,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Start queue: ''G'' key
 
-    Start service: ''D'' key'
+    Stop queue: ''S'' key
+
+    Start service:
+    ''D'' key'
 --- !u!222 &580048276
 CanvasRenderer:
   m_ObjectHideFlags: 0
