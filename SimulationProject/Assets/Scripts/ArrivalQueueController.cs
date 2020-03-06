@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArrivalQueueController : MonoBehaviour
 {
+    public Text unitOfTime;
+    public Text arrival;
+    public Text service;
+
     public GameObject customerPrefab;
     public Transform customerSpawnPlace;
     public bool generatingArrivals = false;
@@ -37,6 +42,11 @@ public class ArrivalQueueController : MonoBehaviour
         // }
         lastPlaceInQueue = waitingRoom;
         //StartCoroutine(GenerateArrivals());
+    }
+
+    public void ApplyInputData()
+    {
+        Queue_Utilities.setData(float.Parse(unitOfTime.text), float.Parse(arrival.text), float.Parse(service.text));
     }
 
     IEnumerator GenerateArrivals()

@@ -33,7 +33,18 @@ public class Queue_Utilities : ScriptableObject
         mu_r = 1f / mu;
     }
 
-    public static float ExpDist(float lambda_r)
+    public static void setData(float unitOfTime, float arrivals, float service){
+        Debug.Log("[USER INPUT] unitOfTime: "+unitOfTime+", arrivals: "+arrivals+", service: "+service);
+
+        lambda = arrivals / unitOfTime;
+        mu = service / unitOfTime;
+
+        Init();
+
+    }
+
+    // public static float ExpDist(float lambda_r)
+    public static float ExpDist()
     {
         float r = Random.value;
         float expDist = -Mathf.Log(r) / lambda_r;
