@@ -4,32 +4,33 @@ using UnityEngine;
 
 public class StudentController : MonoBehaviour
 {
-    public Transform standByArea;
-    public Transform getTicketCounter;
-    public Transform enrollmentCounter;
+    public GameObject standByArea;
+    public GameObject getTicketCounter;
+
+    public bool hasTicket = false;
+    public bool isServiced = false;
 
     public UnityEngine.AI.NavMeshAgent navMeshAgent;
     
     // Start is called before the first frame update
     void Start()
     {
-        standByArea = GameObject.FindGameObjectWithTag("WaitingArea").transform;
+        standByArea = GameObject.FindGameObjectWithTag("WaitingArea");
+        getTicketCounter = GameObject.FindGameObjectWithTag("TicketDesk");
         
         navMeshAgent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        navMeshAgent.SetDestination(standByArea.position);
-
+        navMeshAgent.SetDestination(standByArea.transform.position);
     }
 
     public void SetDestination(Transform transform)
     {
-        standByArea = transform;
-        navMeshAgent.SetDestination(standByArea.position);
+        standByArea.transform.position = transform.position;
+        navMeshAgent.SetDestination(standByArea.transform.position);
     }
     public Transform GetDestination()
     {
-        return standByArea ;
+        return standByArea.transform ;
     }
-
 
     public void OnTriggerEnter(Collider other)
     {

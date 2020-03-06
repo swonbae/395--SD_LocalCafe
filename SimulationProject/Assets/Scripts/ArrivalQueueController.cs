@@ -9,8 +9,7 @@ public class ArrivalQueueController : MonoBehaviour
     public GameObject[] receptionistCounter;
     public bool generatingArrivals = false;
     StudentController studentController;
-    Transform waitingArea;
-    Transform ticketLine;
+    public GameObject waitingArea;
     Transform lastPlaceInQueue;
 
     Queue<GameObject> arrivalQueue = new Queue<GameObject>();
@@ -24,8 +23,7 @@ public class ArrivalQueueController : MonoBehaviour
     {
         //queue_Utilities = GetComponent<Queue_Utilities>();
         Queue_Utilities.lambda = arrival_rate;
-        waitingArea = GameObject.FindGameObjectWithTag("WaitingArea").transform;
-        lastPlaceInQueue = waitingArea;
+        waitingArea = GameObject.FindGameObjectWithTag("WaitingArea");
         //StartCoroutine(GenerateArrivals());
     }
 
@@ -48,7 +46,7 @@ public class ArrivalQueueController : MonoBehaviour
             GameObject go = Instantiate(customerPrefab, customerSpawnPlace[rand].transform.position, Quaternion.identity);
             go.GetComponent<StudentController>().SetDestination(lastPlaceInQueue);
             lastPlaceInQueue = go.transform;
-            
+
             print("Arrival Queue Length=" + arrivalQueue.Count);
         }
     }
@@ -99,7 +97,7 @@ public class ArrivalQueueController : MonoBehaviour
             GameObject goFirst = arrivalQueue.Peek();
             if(goFirst!= null)
             {
-                goFirst.GetComponent<StudentController>().SetDestination(waitingArea);
+                goFirst.GetComponent<StudentController>().SetDestination(waitingArea.transform);
             }
 
             return go;
